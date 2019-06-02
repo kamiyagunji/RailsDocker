@@ -1,21 +1,17 @@
-FROM ruby:2.3.1
-ENV LANG C.UTF-8
+# Railsコンテナ用Dockerfile
 
-RUN echo "deb http://deb.debian.org/debian jessie main" > /etc/apt/sources.list &&\
-    echo "deb http://security.debian.org jessie/updates main" >> /etc/apt/sources.list &&\
-    apt-get update -qq && apt-get install -y \
-    build-essential \
-    nodejs \
- && rm -rf /var/lib/apt/lists/*
-
-RUN gem install bundler
-
-WORKDIR /tmp
-ADD Gemfile Gemfile
-ADD Gemfile.lock Gemfile.lock
+# イメージのベースラインにRuby2.5.1を指定
+FROM ruby:2.5.1
+# Railsに必要なパッケージをインストール
+RUN apt-get update -qq && apt-get install -y build-essential nodejs
+# ルートディレクトリを作成
+RUN mkdir /app
+# 作業ディレクトリを指定
+WORKDIR /app
+# ローカルのGemfileとGemfile.lockをコピー
+COPY src/Gemfile /app/Gemfile
+COPY src/Gemfile.lock /app/Gemfile.lock
+# Gemのインストール実行
 RUN bundle install
-
-ENV APP_HOME /myapp
-RUN mkdir -p $APP_HOME
-WORKDIR $APP_HOME
-ADD . $APP_HOME
+# ローカルのsrcをコピー
+# COPY src /app
