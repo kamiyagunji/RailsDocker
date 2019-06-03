@@ -34,3 +34,5 @@ src/.byebug_history
 # Ignore master key for decrypting credentials and more.
 src/config/master.key
 src/.env
+
+.history
