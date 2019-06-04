@@ -31,7 +31,9 @@ services:
       # Mysql8.0のデフォルトの認証形式をmysql_native_passwordに設定
       - ./mysql-confd:/etc/mysql/conf.d
       # ローカルで保持しているDBをコンテナにマウント
-      - db-volume:/var/lib/mysql
+      # - db-volume:/var/lib/mysql
+    ports:
+      - "3306:3306"
     # コンテナ内の環境変数を定義
     environment:
       # mysqlのルートユーザーのパスワード設定
