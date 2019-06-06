@@ -1,14 +1,13 @@
 class Api::V1::GenresController < ApplicationController
   def index
     @genres = Genre.all
-    p "aaaa"
-    p @genres
-    @genres
+    render json: { status: 200, data: @genres }
   end
 
   def create
     genre = Genre.new(genre_params)
     genre.save!
+    render json: { status: 'SUCCESS', message: 'loaded posts', data: genre }
   end
 
 private
